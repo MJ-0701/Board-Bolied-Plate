@@ -25,5 +25,9 @@ public class Board {
 
     private String contents;
 
+    private String fileName;
+
+    private String filePath;
+
 
 }
