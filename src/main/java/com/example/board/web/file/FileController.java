@@ -27,10 +27,8 @@ public class FileController {
     @PostMapping("/board/file")
     public String boardFileTest(Board board, Model model, MultipartFile files) throws IOException {
         boardService.write(board, files);
-        model.addAttribute("message", "글 작성이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/board/index");
 
-        return "message";
+        return "redirect:/api/v1/file/board/index";
     }
 
     @GetMapping("/board/index")
