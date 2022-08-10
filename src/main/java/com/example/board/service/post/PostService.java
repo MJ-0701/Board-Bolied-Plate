@@ -9,12 +9,15 @@ import com.example.board.service.file.FileHandler;
 import com.example.board.service.file.FileService;
 import com.example.board.web.post.dto.req.PostDeleteDto;
 import com.example.board.web.post.dto.req.PostSaveDto;
+import com.example.board.web.post.dto.res.PostListResponseDto;
+import com.example.board.web.post.dto.res.PostResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -44,6 +47,20 @@ public class PostService {
         }
         return postRepository.save(post).getId();
     }
+
+    @Transactional(readOnly = true)
+    public PostResponseDto postDetail(Long id){
+        Post post = postRepository.findById(id).orElseThrow();
+        return new PostResponseDto(post);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostListResponseDto> postList(){
+        return postRepository.findAll().stream()
+                .map(PostListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public void deletePost(String password, Long id){
         Post post = postRepository.findByPasswordAndId(password, id);

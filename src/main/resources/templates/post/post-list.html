@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+
+</head>
+<body>
+
+<div class="container" style="max-width: 1000px">
+    <div class="py-5 text-center">
+    </div>
+
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>게시글 번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>내용</th>
+                <th>사진</th>
+<!--                <th th:text="#{label.board.regdate}">등록일</th>-->
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="posts : ${posts}">
+<!--                <td><a href="item.html" th:href="@{/boards/{uid}(uid=${board.uid})}" th:text="${board.uid}">글 ID</a></td>-->
+<!--                <td><a href="item.html" th:href="@{/boards/{uid}(uid=${board.uid})}" th:text="${board.subject}">제목</a></td>-->
+                <td th:href="@{/post/detail/${posts.id}}" th:text="${posts.id}"></td>
+                <td th:text="${posts.title}">제목</td>
+                <td th:text="${posts.nickName}">작성자</td>
+                <td th:text="${posts.contents}">내용</td>
+
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div> <!-- /container -->
+
+</body>
+</html>
