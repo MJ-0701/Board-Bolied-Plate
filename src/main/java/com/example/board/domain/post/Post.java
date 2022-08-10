@@ -1,6 +1,7 @@
 package com.example.board.domain.post;
 
 import com.example.board.domain.photo.Photo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,15 +24,20 @@ public class Post {
 
     @Lob
     private String contents;
+    private String nickName;
 
-    @OneToMany(mappedBy = "post", cascade ={CascadeType.PERSIST, CascadeType.REMOVE} ,orphanRemoval = true)
+    private String password;
+
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<Photo> photos = new ArrayList<>();
 
     @Builder
-    public Post(String title, String contents) {
+    public Post(String title, String contents, String nickName, String password) {
 
         this.title = title;
         this.contents = contents;
+        this.nickName = nickName;
+        this.password = password;
     }
 
     public void update(String title, String contents) {

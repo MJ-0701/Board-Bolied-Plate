@@ -2,11 +2,10 @@ package com.example.board.web.post;
 
 import com.example.board.service.post.PostService;
 import com.example.board.web.post.dto.PostFileVo;
+import com.example.board.web.post.dto.req.PostDeleteDto;
 import com.example.board.web.post.dto.req.PostSaveDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,8 +19,16 @@ public class PostApiController {
                 .builder()
                 .contents(fileVo.getContents())
                 .title(fileVo.getTitle())
+                .nickName(fileVo.getNickName())
+                .password(fileVo.getPassword())
                 .build();
 
         return postService.create(dto, fileVo.getFiles());
+    }
+
+    @DeleteMapping("/post/delete/{id}")
+    public void delete(@RequestBody  PostDeleteDto dto, @PathVariable Long id){
+
+        postService.deletePost(dto.getPassword(), id);
     }
 }

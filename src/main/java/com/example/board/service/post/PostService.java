@@ -7,6 +7,7 @@ import com.example.board.domain.post.Post;
 import com.example.board.domain.post.repository.PostRepository;
 import com.example.board.service.file.FileHandler;
 import com.example.board.service.file.FileService;
+import com.example.board.web.post.dto.req.PostDeleteDto;
 import com.example.board.web.post.dto.req.PostSaveDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,8 @@ public class PostService {
                 .builder()
                 .contents(dto.getContents())
                 .title(dto.getTitle())
+                .nickName(dto.getNickName())
+                .password(dto.getPassword())
                 .build();
 
         List<Photo> photoList = fileService.fileInfo(files);
@@ -40,6 +43,11 @@ public class PostService {
             }
         }
         return postRepository.save(post).getId();
+    }
+    @Transactional
+    public void deletePost(String password, Long id){
+        Post post = postRepository.findByPasswordAndId(password, id);
+        postRepository.delete(post);
     }
 
 }
